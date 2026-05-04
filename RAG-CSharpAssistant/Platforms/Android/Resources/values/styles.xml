@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    These overrides shadow the same-named styles MAUI's resizetizer auto-
+    generates in obj/.../lp/.../res/values/styles.xml. Android's resource
+    merger gives project-level resources priority over generated "library"
+    resources, so these definitions are what actually ship in the APK.
+
+    Goal: eliminate every system-level white-flash path on cold start
+    by forcing each window-background/system-bar attribute to the splash
+    palette long enough for LoadingPage to paint its first frame.
+
+      Cold-start sequence on Android, with the surface that paints each pixel:
+
+      1. Activity attached, theme = Maui.SplashTheme
+           - Android 12+:  windowSplashScreenBackground   (this style)
+           - Android 11-:  windowBackground = @drawable/maui_splash
+           - status / nav bars                            (this style)
+      2. MAUI runtime initialises, theme transitions to Maui.MainTheme
+           - windowBackground inherited from Material parent (would be
+             WHITE in light mode if we did not override it below)
+      3. LoadingPage's first frame committed
+           - ContentPage.BackgroundColor = #F5EFE6 paints over everything
+-->
+<resources>
+
+    <!-- ====================================================================
+         The theme MainActivity declares with [Activity(Theme=...)].
+
+         The native Android 12+ Splash Screen API ALWAYS draws something in
+         the centre icon area — if windowSplashScreenAnimatedIcon is not set
+         it falls back to the launcher icon (which is the colourful default
+         MAUI icon, NOT what we want). So we point it at @drawable/maui_splash:
+         the layered drawable MAUI auto-generates from <MauiSplashScreen> —
+         a #F5EFE6 fill with the (transparent-or-beige) splash.png centred
+         on it. Result: Android renders BEIGE on BEIGE in the icon area =
+         visually nothing. The user sees a flat beige screen during the
+         native splash, then LoadingPage paints splash_full.png — no logo
+         appears until the full composition is on screen.
+
+         windowSplashScreenIconBackgroundColor stays #F5EFE6 so the circular
+         mask Android draws around the icon (when this attribute is set) is
+         also beige — no halo, no edge.
+
+         status / nav bar colours pinned to beige so the device chrome
+         doesn't flash white either.
+         ==================================================================== -->
+    <style name="Maui.SplashTheme" parent="Maui.MainTheme.NoActionBar">
+        <item name="maui_splash">true</item>
+        <item name="android:windowBackground">@drawable/maui_splash</item>
+        <item name="android:windowSplashScreenBackground">#F5EFE6</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/maui_splash</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">#F5EFE6</item>
+        <item name="android:statusBarColor">#F5EFE6</item>
+        <item name="android:navigationBarColor">#F5EFE6</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!-- ====================================================================
+         The theme the activity transitions to once MAUI is up. The auto-
+         generated Maui.MainTheme.Base does NOT set android:windowBackground,
+         so it falls back to the Material parent's default (white in light
+         mode). That default is what was painting the brief white frame
+         BEFORE LoadingPage's first frame committed.
+
+         We pin it to the splash beige here. Once any ContentPage paints a
+         BackgroundColor (LoadingPage = #F5EFE6, MainPage = #121212), the
+         page covers the window background completely, so this override
+         only ever matters during the millisecond between splash dismissal
+         and LoadingPage's first frame.
+         ==================================================================== -->
+    <style name="Maui.MainTheme.Base" parent="Theme.MaterialComponents.DayNight">
+        <!-- Same items the auto-generated version declares, kept verbatim
+             so we do not regress any MAUI behaviour (alert dialogs, action
+             menu colours, button paddings via MauiMaterialButton, etc). -->
+        <item name="maui_edgetoedge_optout">true</item>
+        <item name="maui_splash">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/colorActionMenuTextColor</item>
+        <item name="appBarLayoutStyle">@style/MauiAppBarLayout</item>
+        <item name="bottomNavigationViewStyle">@style/Widget.Design.BottomNavigationView</item>
+        <item name="materialButtonStyle">@style/MauiMaterialButton</item>
+        <item name="checkboxStyle">@style/MauiCheckBox</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="alertDialogTheme">@style/MauiAlertDialogTheme</item>
+        <item name="materialAlertDialogTheme">@style/MauiAlertDialogTheme</item>
+
+        <!-- The actual fix: override the Material parent's default white
+             windowBackground with our splash beige so there is no white
+             frame between Maui.SplashTheme dismissal and the first MAUI
+             page committing its BackgroundColor. -->
+        <item name="android:windowBackground">#F5EFE6</item>
+    </style>
+
+</resources>

@@ -1,0 +1,20 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+.vs/
+
+# Generated knowledge base
+RAG-CSharpAssistant/DataPipeline/csharp_knowledge.db
+
+# Pipeline virtualenv (if created locally)
+RAG-CSharpAssistant/DataPipeline/.venv/
+
+# Secrets — bundled at build time, never committed
+RAG-CSharpAssistant/Resources/Raw/groq.key
+**/groq.key
+
+# OS / IDE
+*.user
+*.suo
+.DS_Store
+Thumbs.db

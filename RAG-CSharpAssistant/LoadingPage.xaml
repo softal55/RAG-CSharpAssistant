@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RAG_CSharpAssistant.LoadingPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F5EFE6">
+
+    <!--
+        Full-bleed splash. The entire splash composition (logo, title, subtitle,
+        separator, waves, gradient, particles) is baked into splash_full.png and
+        rendered as a single Image, so what the user sees is pixel-identical to
+        the design mockup with zero risk of font / spacing / colour drift from
+        re-creating it in XAML.
+
+        BackgroundColor on the page stays #F5EFE6 (matches the native
+        Maui.SplashTheme's windowSplashScreenBackground) so any letterboxing
+        from AspectFill on extreme aspect ratios blends invisibly.
+    -->
+
+    <Grid>
+        <Image Source="splash_full.png"
+               Aspect="AspectFill" />
+    </Grid>
+
+</ContentPage>
