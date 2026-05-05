@@ -32,10 +32,10 @@ If no local context is found, the app still answers — but tells you so with a 
 
 ## Screenshots
 
-| Splash / Loading | Empty State | Active Chat |
-|:---:|:---:|:---:|
-| <img src="Resources/Splash/splash.png" width="240"/> | <img src="./screenshots/empty.png" width="240"/> | <img src="./screenshots/chat.png" width="240"/> |
-| Beige warmup screen, DB pre-loads in background | Logo, tagline, three quick-start suggestions | Streaming AI responses with grounded / ungrounded labels |
+| Splash | Empty State | Active Chat | No Context |
+|:---:|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/softal55/RAG-CSharpAssistant/main/RAG-CSharpAssistant/assets/screenshots/splash_A.jpg" width="220" alt="Splash Screen"/> | <img src="https://raw.githubusercontent.com/softal55/RAG-CSharpAssistant/main/RAG-CSharpAssistant/assets/screenshots/empty-state.jpg" width="220" alt="Empty State"/> | <img src="https://raw.githubusercontent.com/softal55/RAG-CSharpAssistant/main/RAG-CSharpAssistant/assets/screenshots/chat_1.jpg" width="220" alt="Active Chat"/> | <img src="https://raw.githubusercontent.com/softal55/RAG-CSharpAssistant/main/RAG-CSharpAssistant/assets/screenshots/error.jpg" width="220" alt="No Context"/> |
+| App initialization with background data preloading | Guided entry with logo, tagline, and suggested prompts | Real-time streaming responses with grounding indicators | No relevant context detected — fallback answer generation |
 
 ---
 
