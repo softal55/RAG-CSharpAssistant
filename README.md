@@ -1,7 +1,6 @@
 <div align="center">
-    
-<img src="https://raw.githubusercontent.com/softal55/RAG-CSharpAssistant/main/RAG-CSharpAssistant/Resources/Images/appIcon.png" alt="C# Assistant Icon"/>
 
+<img src="https://raw.githubusercontent.com/softal55/RAG-CSharpAssistant/main/RAG-CSharpAssistant/Resources/Images/appIcon.png" alt="C# Assistant Icon" width="96"/>
 
 # RAG-CSharpAssistant
 
