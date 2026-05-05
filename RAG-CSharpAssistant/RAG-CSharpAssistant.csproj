@@ -48,8 +48,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<!-- App Icon (single SVG; Color = Android adaptive-icon background behind any transparency) -->
+		<MauiIcon Include="Resources\AppIcon\icon.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
 		<!-- Native cold-start splash is intentionally a blank beige sheet:
